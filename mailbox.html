@@ -32,3 +32,150 @@ actor.act
 require 'mailbox'
 
 class Logger
+  include Mailbox
+
+  mailslot
+  def log(message)
+    File.open("sample.log", 'a') { |log_file| log_file.write message }
+  end
+
+end
+
+logger = Logger.new
+logger.log "some log message"
+
+</textarea>
+<p>Here the method log acts as an entry point to the Logger instance&#8217;s mailbox .  That is to say, classes that use an instance of the Logger class can send information as a message via the log method.  This message will be processed asynchronously on the thread owned by the Logger class, leaving the caller&#8217;s thread free to continue execution.  </p>
+<p>Note that it is possible to define multiple methods on the Logger class all of which enqueue work to be processed on the one thread owned by the Logger class:</p>
+<textarea name="code" class="ruby:nocontrols:nogutter" cols="60" rows="10">
+require 'mailbox'
+
+class Logger
+  include Mailbox
+
+  mailslot
+  def log(message)
+    File.open("sample.log", 'a') { |log_file| log_file.write message }
+  end
+
+  mailslot
+  def clear
+    File.open("sample.log", 'w') {}
+  end
+end
+
+logger = Logger.new
+logger.clear
+logger.log "some log message"
+
+</textarea>
+<p>Conceptually, think of this as two mailslots on the Logger class, each of which deliver messages to the Logger instance&#8217;s one mailbox.  This approach forsakes some of the encapsulation of pattern matching based Actor model implementations for a reduction in code indirection.  While callers now know a bit more about the Logger class, the intent of the call is a bit easier to reason about.  Note that it is still possible to use a pattern matching approach when desirable:</p>
+<textarea name="code" class="ruby:nocontrols:nogutter" cols="60" rows="10">
+class Logger
+
+  mailslot
+  def action(action, args = {})
+
+  	case(action)
+    	when :log
+        File.open("sample.log", 'a') { |log_file| log_file.write args[:message] }
+        break
+      when :clear
+        File.open("sample.log", 'w') {}
+        break
+    end
+  end
+
+end
+
+logger = Logger.new
+logger.action(:clear)
+logger.action(:log, :message => "some log message")
+
+</textarea>
+<p>Mailbox can also be used to take advantage of inherent data parallelism:</p>
+<textarea name="code" class="ruby:nocontrols:nogutter" cols="60" rows="10">
+class DataProcessor
+  include Mailbox
+
+  mailslot
+  def process(data)
+    p "#{data} was processed by Thread# #{Thread.current.object_id}"
+  end
+
+end
+
+items = ["item1", "item2", "item3", "item4", "item5"]
+
+processors = [DataProcessor.new, DataProcessor.new, DataProcessor.new]
+
+items.each_with_index do |item, index|
+	processors[index % processors.length].process item
+end
+
+#-> "item1 was processed by Thread# 92"
+#-> "item2 was processed by Thread# 94"
+#-> "item3 was processed by Thread# 96"
+#-> "item4 was processed by Thread# 92"
+#-> "item5 was processed by Thread# 94"
+
+</textarea>
+<p>While Mailbox works well for this sort of thing, if data parallelism is your primary interest, it&#8217;s worth considering <a href="http://peach.rubyforge.org/">Peach</a> as well.</p>
+<p>Process Calculus based approaches to message based concurrency add a layer of indirection between messages senders and message receivers.  Rather than sending messages directly to a known endpoint, agents (usually referred to as Processes) publish messages on a channel.  Processes interested in handling messages subscribe to this same channel.  One advantage to this approach is that it lends itself to a loosely coupled design.  Processes can publish and receive on the same channel, choosing to act or not act on a given message, without creating any dependencies between the various Processes.  This approach is fully supported by Mailbox.</p>
+<textarea name="code" class="ruby:nocontrols:nogutter" cols="60" rows="10">
+class Logger
+  include Mailbox
+
+  def initialize(log_channel)
+    register_channel :log_channel, log_channel
+  end
+
+  mailslot :channel => :log_channel
+  def log(message)
+    File.open("sample.log", 'a') { |log_file| log_file.write message }
+  end
+end
+
+channel = JRL::Channel.new
+logger = Logger.new channel
+channel.publish "some log statement"
+
+</textarea>
+<p>Here a new <a href="http://github.com/reevesg/jretlang">Jretlang</a> channel (more on Jretlang below) is created and passed into the Logger&#8217;s constructor where it is registered.  Registering a channel associates the channel with any mailslot method defined with the same channel key (here the log method).  Publishing a message on the channel results in an invocation of the mailslot method.</p>
+<p>Any object with a reference to a channel can publish on it.  Note how the ping pong game below is started by code exterior to the players, which publishes the first &#8220;ping&#8221; on ping_channel:</p>
+<textarea name="code" class="ruby:nocontrols:nogutter" cols="60" rows="10">
+class Player
+  include Mailbox
+
+  def initialize(sound, send_channel, recieve_channel)
+    @sound = sound
+    @send_channel = send_channel
+    register_channel :recieve_channel, recieve_channel
+  end
+
+  mailslot :channel => :recieve_channel
+  def play(last_move)
+    p "Thread [#{Thread.current.object_id}] - #{@sound} for #{last_move}"
+    @send_channel.publish @sound
+  end
+
+end
+
+ping_channel = JRL::Channel.new
+pong_channel = JRL::Channel.new
+
+pinger = Player.new "ping", ping_channel, pong_channel
+ponger = Player.new "pong", pong_channel, ping_channel
+
+ping_channel.publish "ping"
+
+</textarea>
+<p>The choice between simple mailslots and channel based uses of mailbox can be made on a case by case basis.  Where communication is strictly between one actor and another, I&#8217;d usually prefer the reduced complexity and indirection of a simple mailslot.  When communication is one to many, I&#8217;d seriously consider taking advantage of the loose coupling afforded by a channel based approach.</p>
+<p>Mailbox&#8217;s implementation leans heavily on <a href="http://github.com/reevesg/jretlang">Jretlang</a>, a gem published by <a href="http://www.counterflo.ws/">Garreth Reeves</a> that provides a lightweight ruby wrapper around the <a href="http://code.google.com/p/jetlang/">Jetlang</a> concurrency library authored by <a href="http://www.jroller.com/mrettig/">Mike Rettig</a> and <a href="http://osi.fotap.org/">Peter Royal</a>.  </p>
+<p>As always, I hope this post and Mailbox is of some use to you.  Comments and feedback are greatly appreciated.  Joel and I would like to thank <a href="http://www.jroller.com/mrettig/">Mike Rettig</a> and <a href="http://osi.fotap.org/">Peter Royal</a> for providing a great messaging library and <a href="http://www.counterflo.ws/">Gareth Reeves</a> for making it a pleasure to use in JRuby. </p>
+<p>Our thanks also to Nate Austin, <a href="http://blog.deobald.ca/">Steve Deobald</a>, <a href="http://blog.jayfields.com/">Jay Fields</a>, Ajit George, <a href="http://www.pgrs.net/">Paul Gross</a>, <a href="http://www.shaneharvie.com/">Shane Harvie</a>, <a href="http://elhumidor.blogspot.com/">John Hume</a>, Gareth Jones, Steve McLarnon, <a href="http://www.counterflo.ws/">Gareth Reeves</a>, <a href="http://syntatic.wordpress.com/">Brian Tatnall</a>, and <a href="http://www.somethingnimble.com/">Zak</a> for their input on this post and the Mailbox gem.</p>
+				
+
+</div>
+
+</html>
