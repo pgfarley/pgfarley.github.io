@@ -1,0 +1,34 @@
+<html>
+
+<div class="entry">
+					<p>While the Ruby 1.8 and 1.9 internal threading models differ significantly, the exposed concurrency model is fundamentally <a href="http://www.igvita.com/2008/11/13/concurrency-is-a-myth-in-ruby/">the same</a>.  Unlike Ruby 1.8, Ruby 1.9 threads do map to native threads, unfortunately the 1.9 interpreter forces user created threads to acquire a global mutex lock before executing.  The upshot is that 1.9 thread execution is serialized and unable to benefit from multiple cores. </p>
+<p>In-process, thread based concurrency is not the only way to effectively chew cores of course.  The traditional Ruby approach to utilizing processing power is to spin up multiple isolated process.  Rails apps, backed by mongrel or Phusion Passenger processes are the canonical examples.  When using this approach, inter-process communication is relatively rare, and done indirectly through shared resources such as a database, memcached instances, or files.  Copious real world deployment success stories have proven the efficacy of this approach for occasional inter-process communication.   That said, there is a class of application which requires communication between code executing on separate cores at a volume that is only viable via in-process shared memory access. For the time being, <a href="http://jruby.org/">JRuby</a> is the best and and only option for building this class of application in Ruby.</p>
+<p>While any in-process concurrency strategy necessitates some form of shared memory access, decades of deadlocks, race conditions, and contention issues have led many developers (including this one) to conclude that explicit management of shared memory is best avoided.  Software languages and libraries can be used to raise the level of abstraction in concurrent software, relegating synchronization of shared memory access to system provided infrastructure.  One common alternative to explicit, lock based synchronization is <a href="http://en.wikipedia.org/wiki/Message_passing">message passing</a> based concurrency.  In message passing based concurrency, agents or actors execute code concurrently, passing information to each other via messages.  It should be noted that part of what makes this strategy reasonable is a requirement (language enforced or convention based) that information sent as part of a message be immutable.  Mutating messaged contents effectively negates the benefits of message passing, as the mutations themselves will require synchronization.</p>
+<p>Broadly, message based concurrency implementation can be divided into two styles, <a href="http://hdl.handle.net/1721.1/6952">Actor Model</a> and <a href="http://en.wikipedia.org/wiki/Process_calculus">Process Calculus</a>.  The differences between the two styles are well summarized <a href="http://en.wikipedia.org/wiki/Actor_model_and_process_calculi">here</a>.</p>
+<p>My friend and colleague <a href="http://www.blog.wordaligned.com/">Joel Friedman</a> and I have published a gem <a href="http://mailbox.rubyforge.org/mailbox/">Mailbox</a> (code <a href="http://github.com/joelash/mailbox">here</a>) that provides concise message passing infrastructure in JRuby.  This post looks at how both styles of message passing concurrency can be expressed with Mailbox.</p>
+<p>To kick things off, here is a simple example of an Actor model like usage:</p>
+<textarea name="code" class="ruby:nocontrols:nogutter" cols="60" rows="10">
+require 'mailbox'
+
+class Actor
+  include Mailbox
+
+  mailslot
+  def act
+    p "acting on Thread #{Thread.current.object_id}"
+  end
+end
+
+actor = Actor.new
+p "acting on Thread #{Thread.current.object_id}"
+actor.act
+
+#-> "acting on Thread 90"
+#-> "acting on Thread 92"
+</textarea>
+<p>Inclusion of the Mailbox module ensures an instance specific thread will be created for any new instance of the Actor class.  Work items are read off of an instance specific queue or &#8220;mailbox&#8221;.  Items are posted to the instances mailbox via calls to mailslot methods. </p>
+<p>A less trivial example:</p>
+<textarea name="code" class="ruby:nocontrols:nogutter" cols="60" rows="10">
+require 'mailbox'
+
+class Logger
