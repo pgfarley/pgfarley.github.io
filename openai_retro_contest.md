@@ -17,7 +17,7 @@ The Gym toolkit defines a handy Python API for working with this characteristic 
 
  [IMAGE]
 
-The contest Quickstart includes an agent that selects a random game controller action with each time step. In this simple example, the entire reinforcement learning problem strucure is expressed in three of code!
+The contest Quickstart includes an agent that selects a random game controller action with each time step. In this simple example, the entire reinforcement learning problem strucure is expressed in three lines of code!
 
 Create an instance of the Sonic game **environment** and expose it as an object which subclasses Gym *[Env](https://github.com/openai/gym/blob/master/gym/core.py)*.
 ```python
