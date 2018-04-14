@@ -7,13 +7,13 @@ The official website includes a [Quickstart](https://contest.openai.com/details)
 
 ### OpenAI Gym
 
-The Gym toolkit is the core project that all other contest tools build on. The [Gym site](https://gym.openai.com/) describes it as "a toolkit for developing and comparing reinforcement learning algorithms". In practice, understanding what Gym is for requires understanding a little bit about a standard reinforcement learning metaphor.
+The Gym toolkit is the core project that all other contest tools build on. The [Gym site](https://gym.openai.com/) describes it as "a toolkit for developing and comparing reinforcement learning algorithms". In practice, grokking Gym requires understanding a little bit about a standard reinforcement learning metaphor.
 
-In reinforcement learning, the machine learning “problem” is structured as **agents** making **observations** of, taking **actions** on, and collecting **rewards** from an **environment**. The passage of time is broken up into discrete time **steps**.
+In reinforcement learning, the machine learning "problem" is expressed as **agents** making **observations** of, taking **actions** on, and collecting **rewards** from an **environment**. The passage of time is broken up into discrete time **steps**.
 
  [IMAGE]
 
-The Gym toolkit provides a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the Environment is the Sonic game, the Agent is the player algorithm implemented by contestants, the Observations are game state data at a given time (screen pixels, remaining lives, etc), the Actions are console controller commands (up, jump, left, etc), and the Reward is the percentage of level completed.
+The Gym toolkit defines a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the E**environment** is the Sonic game, the **agent** is the player algorithm implemented by contestants, the **observations** are game state data (screen pixels, remaining lives, etc) at a given time which is incremented in **step**s, the **actions** are console controller commands (up, jump, left, etc), and the **reward** is the percentage of level completed.
 
  [IMAGE]
 
