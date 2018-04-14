@@ -37,18 +37,18 @@ if __name__ == '__main__':
     main()
 ```
 
-The entire reinforcement learning problem strucure is expressed in three lines here.
+The entire reinforcement learning problem strucure is expressed in three of these lines!
 
+Create an instance of the Sonic game **environment** and exposes it as an object which subclasses Gym *[Env](https://github.com/openai/gym/blob/master/gym/core.py)*.
 ```python
    env = make(game='SonicTheHedgehog-Genesis', state='LabyrinthZone.Act1')
  ```
-  Creates an instance of the Sonic game **environment** and exposes it as an object which subclasses Gym *[Env](https://github.com/openai/gym/blob/master/gym/core.py)*.
 
+Then time is advanced **step**s. with calls to *step()*. With each **step** the **environment** is passed an **action**, selected by a call to *env.action_space.sample()* which can be through of as very simple **agent** that selects a random sample from the spaces of all **action**s defined for the **environemnt**.  After each step a float *rew* is returned indicating the **reward** for that current **step**. Similarly *step()* returns *obs* a object with **observation** data for the Sonic game **environment** at this time **step**.
 ```python
     while True:
         obs, rew, done, info = env.step(env.action_space.sample())
 ```
-Time is advanced **step**s. with calls to *step()*. With each **step** the **environment** is passed an **action**, selected by a call to *env.action_space.sample()* which can be through of as very simple **agent** that selects a random sample from the spaces of all **action**s defined for the **environemnt**.  After each step a float *rew* is returned indicating the **reward** for that current **step**. Similarly *step()* returns *obs* a object with **observation** data for the Sonic game **environment** at this time **step**.
 
 Render (SimpleImageViewer)
 
