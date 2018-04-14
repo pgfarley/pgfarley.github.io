@@ -13,12 +13,42 @@ In reinforcement learning, the machine learning "problem" is expressed as **agen
 
  [IMAGE]
 
-The Gym toolkit defines a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the E**environment** is the Sonic game, the **agent** is the player algorithm implemented by contestants, the **observations** are game state data (screen pixels, remaining lives, etc) at a given time which is incremented in **step**s, the **actions** are console controller commands (up, jump, left, etc), and the **reward** is the percentage of level completed.
+The Gym toolkit defines a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the **environment** is the Sonic game, the **agent** is the player algorithm implemented by contestants, the **observations** are game state data (screen pixels, remaining lives, etc) at a given time which is incremented in **step**s, the **actions** are console controller commands (up, jump, left, etc), and the **reward** is the percentage of level completed.
 
  [IMAGE]
 
+The contest Quickstart includes an agent that does something randome to the game controller with each time step.
 
-Let’s take a look at the random agent
+```python
+from retro_contest.local import make
+
+
+def main():
+    env = make(game='SonicTheHedgehog-Genesis', state='LabyrinthZone.Act1')
+    obs = env.reset()
+    while True:
+        obs, rew, done, info = env.step(env.action_space.sample())
+        env.render()
+        if done:
+            obs = env.reset()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+The entire reinforcement learning problem strucure is expressed in three lines here.
+
+```python
+   env = make(game='SonicTheHedgehog-Genesis', state='LabyrinthZone.Act1')
+ ```
+  Creates an instance of the Sonic game **environment** and exposes it as an object which subclasses Gym *[Env](https://github.com/openai/gym/blob/master/gym/core.py)*.
+
+```python
+    while True:
+        obs, rew, done, info = env.step(env.action_space.sample())
+```
+Time is advanced **step**s. with calls to *step()*. With each **step** the **environment** is passed an **action**, selected by a call to *env.action_space.sample()* which can be through of as very simple **agent** that selects a random sample from the spaces of all **action**s defined for the **environemnt**.  After each step a float *rew* is returned indicating the **reward** for that current **step**. Similarly *step()* returns *obs* a object with **observation** data for the Sonic game **environment** at this time **step**.
 
 Render (SimpleImageViewer)
 
