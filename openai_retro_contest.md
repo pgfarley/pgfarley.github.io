@@ -34,15 +34,14 @@ Render (SimpleImageViewer)
 
 Gym is useful for all sorts of stuff
 
-MUJUCO Agent
-[VIDEO]
+[![Competitive Self-Play](https://img.youtube.com/vi/OBcjhp4KSgQ/0.jpg)](https://www.youtube.com/watch?v=OBcjhp4KSgQ)
+
 Code
-Beauty of Gym, one interface 
 
 
 Sutton book 1.1 and 3.1
 
 https://gym.openai.com/docs/
 
-Environments
+Environments. [LINK] create your own.
 
