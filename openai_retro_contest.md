@@ -7,7 +7,7 @@ The official website includes a [Quickstart](https://contest.openai.com/details)
 
 ### OpenAI Gym
 
-The Gym toolkit is the core project that all other contest tools build on. The [official Gym site](https://gym.openai.com/) describes it as "a toolkit for developing and comparing reinforcement learning algorithms". In practice, understanding what Gym is for requires understanding a little bit about a standard reinforcement learning metaphor.
+The Gym toolkit is the core project that all other contest tools build on. The [Gym site](https://gym.openai.com/) describes it as "a toolkit for developing and comparing reinforcement learning algorithms". In practice, understanding what Gym is for requires understanding a little bit about a standard reinforcement learning metaphor.
 
 In reinforcement learning, the machine learning “problem” is structured as **agents** making **observations** of, taking **actions** on, and collecting **rewards** from an **environment**. The passage of time is broken up into discrete time **steps**.
 
