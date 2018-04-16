@@ -1,11 +1,11 @@
-## OpenAI retro contest (Part 1 Gym)
+## OpenAI retro contest (Part 1 - Gym)
 
 On April 5th the folks at [OpenAI](https://openai.com/) launched a [reinforcement learning contest](https://contest.openai.com/) based on the first three Sonic games for Sega’s 16-bit Mega Drive game console (aka the Sega Genesis in North America).
 The goal of the competition is to create an AI player agent that advances the furthest through a set of custom and undisclosed game levels. 
 
 The official website includes a [Quickstart](https://contest.openai.com/details) for getting up and running. Following those instructions seems like a highly recommended first step for anyone looking to get involved in the contest. As a follow on, I thought I'd write-up a set of short introductory guides to the assorted tools and libraries used in the contest. Hopefully learning a bit about the various pieces of contest infrastructure and how they hang together will be useful background not only for this contest but for future projects and research based on OpenAI’s infrastructure as well.
 
-### Reinforcement Learning
+#### Reinforcement Learning
 
 The Gym toolkit is the core project that all other contest tools build on. The [Gym site](https://gym.openai.com/) describes it as "a toolkit for developing and comparing reinforcement learning algorithms". Before trying to understand Gym though, it's useful to understand a little bit about the standard reinforcement learning metaphor.
 
