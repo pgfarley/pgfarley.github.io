@@ -11,7 +11,7 @@ The Gym toolkit is the core project that all other contest tools build on. The [
 
 In reinforcement learning, the machine learning "problem" is expressed as **agents** making **observations** of, taking **actions** on, and collecting **rewards** from an **environment**. The passage of time is broken up into discrete time **steps**.
 
- ![Reinforcement Learning](img/reinforcement_learning.jpeg)
+ ![Reinforcement Learning](img/reinforcement_learning.png)
 
 ### Sonic
 
