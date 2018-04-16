@@ -1,4 +1,4 @@
-## OpenAI retro contest (Part 1 - Gym)
+## OpenAI Retro Contest (Part 1 - Gym)
 
 On April 5th the folks at [OpenAI](https://openai.com/) launched a [reinforcement learning contest](https://contest.openai.com/) based on the first three Sonic games for Sega’s 16-bit Mega Drive game console (aka the Sega Genesis in North America).
 The goal of the competition is to create an AI player agent that advances the furthest through a set of custom and undisclosed game levels. 
