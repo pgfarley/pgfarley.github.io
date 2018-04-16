@@ -1,19 +1,19 @@
-## OpenAI retro contest
+## OpenAI retro contest (Part 1)
 
 On April 5th the folks at OpenAI launched a [reinforcement learning contest](https://contest.openai.com/) based on the first three Sonic games for Sega’s 16-bit Mega Drive game console (aka the Sega Genesis in North America).
 The goal of the competition is to create an AI player agent that advances the furthest through a set of custom and undisclosed game levels. 
 
-The official website includes a [Quickstart](https://contest.openai.com/details) for getting up and running. Following those instructions is a highly recommended first step for anyone looking to get involved in the contest. As a follow on I thought I'd write-up a brief guide to the assorted tools and libraries that get used in the Quickstart. Hopefully learning a bit about the various pieces of contest infrastructure and how they hang together will be useful background for this contest as well as for future projects based on OpenAI’s infrastructure.
+The official website includes a [Quickstart](https://contest.openai.com/details) for getting up and running. Following those instructions is a highly recommended first step for anyone looking to get involved in the contest. As a follow on I thought I'd write-up a series of brief guide to the assorted tools and libraries that get used in the cintest. Hopefully learning a bit about the various pieces of contest infrastructure and how they hang together will be useful background not only for this contest but for future projects and research based on OpenAI’s infrastructure as well.
 
 ### OpenAI Gym
 
-The Gym toolkit is the core project that all other contest tools build on. The [Gym site](https://gym.openai.com/) describes it as "a toolkit for developing and comparing reinforcement learning algorithms". In practice, grokking Gym requires understanding a little bit about a standard reinforcement learning metaphor.
+The Gym toolkit is the core project that all other contest tools build on. The [Gym site](https://gym.openai.com/) describes it as "a toolkit for developing and comparing reinforcement learning algorithms". Before trying to unsderstand Gym, it's useful to understanda little bit about the standard reinforcement learning metaphor.
 
 In reinforcement learning, the machine learning "problem" is expressed as **agents** making **observations** of, taking **actions** on, and collecting **rewards** from an **environment**. The passage of time is broken up into discrete time **steps**.
 
  ![Reinforcement Learning](img/reinforcement_learning.jpeg)
 
-The Gym toolkit defines a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the **environment** is the Sonic game, the **agent** is the player algorithm implemented by contestants, the **observations** are game state data (screen pixels, remaining lives, etc) at a given time which is incremented in **step**s, the **actions** are console controller commands (up, jump, left, etc), and the **reward** is the percentage of level completed.
+The Gym toolkit defines a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the **environment** is the Sonic game and the **agent** is the player algorithm implemented by contestants. In this context, the **observations** are game state data (screen pixels, remaining lives, etc) at a given time (which is incremented in **step**s). The **actions** are represented by the set of all console controller commands (up, jump, left, etc). Finally, the **reward** is a numeric value indicating level completion progress encoded as Sonic's horizontal offset from the start of the level.
 
 ![Sonic as Reinforcement Learning](img/sonic_reinforcement_learning.jpeg)
 
@@ -30,11 +30,11 @@ Advance time in **step**s with calls to *step()*. With each **step** the **envir
         obs, rew, done, info = env.step(env.action_space.sample())
 ```
 
-Render (SimpleImageViewer)
+Gym is useful for all sorts of stuff, and provides access to many diffent types of environemnt's with varying complexity. Regardless of complexity of the environemnt ussed, research using Gym will include some top lecel code to invoke this high level reinfocement learning problem strucuture.
 
-Gym is useful for all sorts of stuff
+As an example, looking at the code for OpenAI released an paper in Competative Self Play 
 
-[![Competitive Self-Play](https://img.youtube.com/vi/OBcjhp4KSgQ/0.jpg)](https://www.youtube.com/watch?v=OBcjhp4KSgQ)
+![Competitive Self-Play](https://img.youtube.com/vi/OBcjhp4KSgQ/0.jpg)](https://www.youtube.com/watch?v=OBcjhp4KSgQ)
 
 Code
 
