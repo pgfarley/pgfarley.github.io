@@ -32,12 +32,48 @@ Advance time in **step**s with calls to *step()*. With each **step** the **envir
 
 Gym is useful for all sorts of stuff, and provides access to many diffent types of environemnt's with varying complexity. Regardless of complexity of the environemnt ussed, research using Gym will include some top lecel code to invoke this high level reinfocement learning problem strucuture.
 
-As an example, looking at the code for OpenAI released an paper in Competative Self Play 
+As an example, OpenAI released a [paper](https://arxiv.org/abs/1710.03748) in Competative Self Play in October 2017 
 
-![Competitive Self-Play](https://img.youtube.com/vi/OBcjhp4KSgQ/0.jpg)](https://www.youtube.com/watch?v=OBcjhp4KSgQ)
+[![Competitive Self-Play](https://img.youtube.com/vi/OBcjhp4KSgQ/0.jpg)](https://www.youtube.com/watch?v=OBcjhp4KSgQ)
 
-Code
+Looking at the code [main.py](https://github.com/openai/multiagent-competition/blob/master/main.py) it's easy to spot the **environemnt** setup...
 
+```python
+def run(config):
+    if config.env == "kick-and-defend":
+        env = gym.make("kick-and-defend-v0")
+        policy_type = "lstm"
+    elif config.env == "run-to-goal-humans":
+        env = gym.make("run-to-goal-humans-v0")
+        policy_type = "mlp"
+    elif config.env == "run-to-goal-ants":
+        env = gym.make("run-to-goal-ants-v0")
+        policy_type = "mlp"
+    elif config.env == "you-shall-not-pass":
+        env = gym.make("you-shall-not-pass-humans-v0")
+        policy_type = "mlp"
+    elif config.env == "sumo-humans":
+        env = gym.make("sumo-humans-v0")
+        policy_type = "lstm"
+    elif config.env == "sumo-ants":
+        env = gym.make("sumo-ants-v0")
+        policy_type = "lstm"
+    else:
+        print("unsupported environment")
+        print("choose from: run-to-goal-humans, run-to-goal-ants, you-shall-not-pass, sumo-humans, sumo-ants, kick-and-defend")
+        sys.exit()
+#...
+```
+and a loop pf **action**s against the **environemnt** resulting in an **observation** and a **reward**. 
+
+```python
+    while num_episodes < max_episodes:
+        env.render()
+        action = tuple([policy[i].act(stochastic=True, observation=observation[i])[0]
+                        for i in range(len(policy))])
+        observation, reward, done, infos = env.step(action)
+```
+In the next post 
 
 Sutton book 1.1 and 3.1
 
