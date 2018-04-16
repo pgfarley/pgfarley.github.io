@@ -30,9 +30,9 @@ Advance time in **step**s with calls to *step()*. With each **step** the **envir
         obs, rew, done, info = env.step(env.action_space.sample())
 ```
 
-Gym is useful for all sorts of stuff, and provides access to many diffent types of environemnt's with varying complexity. Regardless of complexity of the environemnt ussed, research using Gym will include some top lecel code to invoke this high level reinfocement learning problem strucuture.
+Gym is useful for all sorts of stuff, and provides access to many different types of [environemnts](https://gym.openai.com/envs) and of course programmers can also create their own. Regardless of the complexity of the environemnt though, research using Gym will very likely include top level code to invoke the high level reinfocement learning problem strucuture.
 
-As an example, OpenAI released a [paper](https://arxiv.org/abs/1710.03748) in Competative Self Play in October 2017 
+As an example, OpenAI released a Competative Self Play [paper](https://arxiv.org/abs/1710.03748) in October 2017.
 
 [![Competitive Self-Play](https://img.youtube.com/vi/OBcjhp4KSgQ/0.jpg)](https://www.youtube.com/watch?v=OBcjhp4KSgQ)
 
@@ -64,7 +64,7 @@ def run(config):
         sys.exit()
 #...
 ```
-and a loop pf **action**s against the **environemnt** resulting in an **observation** and a **reward**. 
+and a loop of **action**s against the **environemnt** resulting in an **observation** and a **reward**. 
 
 ```python
     while num_episodes < max_episodes:
@@ -73,11 +73,10 @@ and a loop pf **action**s against the **environemnt** resulting in an **observat
                         for i in range(len(policy))])
         observation, reward, done, infos = env.step(action)
 ```
-In the next post 
+In the next post we'll take a look at [Gym Retro](https://github.com/openai/retro) a library that exposes video games as Gym environemnts. 
 
-Sutton book 1.1 and 3.1
+If you want to dig deeper into Gym the [docs](https://gym.openai.com/docs/) and [source code](https://github.com/openai/gym) are good place to start. 
 
-https://gym.openai.com/docs/
+Richard Sutton, one of the most important names in reinforcement learning, has made the complete draft of his much aticipated 2nd edition to *Reinforcement Learning: An Introduction* freely [available](http://incompleteideas.net/book/the-book-2nd.html) online. For a (very much) more authoritative overview of the environement agent loop checkout section 1.1. For a formal presentation look to section 3.1
 
-Environments. [LINK] create your own.
-
+Thanks for reading, I hope this was of some use to you. See you in Part 2.
