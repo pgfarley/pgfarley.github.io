@@ -15,7 +15,7 @@ In reinforcement learning, the machine learning "problem" is expressed as **agen
 
 The Gym toolkit defines a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the **environment** is the Sonic game, the **agent** is the player algorithm implemented by contestants, the **observations** are game state data (screen pixels, remaining lives, etc) at a given time which is incremented in **step**s, the **actions** are console controller commands (up, jump, left, etc), and the **reward** is the percentage of level completed.
 
- [Sonic as Reinforcement Learning](img/sonic_reinforcement_learning.jpeg)
+![Sonic as Reinforcement Learning](img/sonic_reinforcement_learning.jpeg)
 
 The contest Quickstart includes an [agent](https://contest.openai.com/static/random-agent.py) that selects a random game controller action with each time step. In this simple example, the entire reinforcement learning problem strucure is expressed in three lines of code!
 
