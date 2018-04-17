@@ -11,13 +11,13 @@ The Gym toolkit is the core project that all other contest tools build on. The [
 
 In reinforcement learning, the machine learning "problem" is expressed as **agents** making **observations** of, taking **actions** on, and collecting **rewards** from an **environment**. The passage of time is broken up into discrete time **steps**.
 
- ![Reinforcement Learning](img/reinforcement_learning.png)
+ ![Reinforcement Learning](../assets/reinforcement_learning.png)
 
 ### Sonic
 
 The Gym toolkit defines a handy Python API for working with this characteristic reinforcement learning structure. Concretely, in the OpenAI contest, the **environment** is the Sonic game and the **agent** is the player algorithm implemented by contestants. In this context, the **observations** are game state data (screen pixels, remaining lives, etc) at a given time (which is incremented in **step**s). The **actions** are represented by the set of all console controller commands (up, jump, left, etc). Finally, the **reward** is a numeric value indicating level completion progress encoded as Sonic's horizontal offset from the start of the level.
 
-![Sonic as Reinforcement Learning](img/sonic_reinforcement_learning.png)
+![Sonic as Reinforcement Learning](../assets/sonic_reinforcement_learning.png)
 
 The contest Quickstart includes an [agent](https://contest.openai.com/static/random-agent.py) that selects a random game controller action with each time step. In this simple example, the entire reinforcement learning problem structure is expressed in three lines of code.
 
