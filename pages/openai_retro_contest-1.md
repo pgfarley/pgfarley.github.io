@@ -81,8 +81,13 @@ and a loop of **action**s against the **environment** resulting in an **observat
 
 In part 2 we'll take a look at [Gym Retro](https://github.com/openai/retro) a library that exposes video games as Gym environments. 
 
-If you want to dig deeper into Gym the [docs](https://gym.openai.com/docs/) and [source code](https://github.com/openai/gym) are good place to start. 
+If you want to dig deeper into Gym the [docs](https://gym.openai.com/docs/) and [source code](https://github.com/openai/gym) are good places to start. 
 
 Richard Sutton, one of the most important names in reinforcement learning, has made the complete draft of the much anticipated 2nd edition of his *Reinforcement Learning: An Introduction* freely [available](http://incompleteideas.net/book/the-book-2nd.html) online. For a (light years) more authoritative overview of the environment agent loop checkout section 1.1 and for the formal treatment look to section 3.1
 
 Thanks for reading, I hope this was of some use to you. See you in Part 2.
+
+--- 
+
+{% include_relative footer.html %}
+
