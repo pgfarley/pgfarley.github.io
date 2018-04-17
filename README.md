@@ -2,7 +2,7 @@
 
 Pat(rick)\* Farley's home on the Internet.
 
-+[OpenAI Sonic Retro Contest Part 1 - Gym](pages/openai_retro_contest-1)
++ [OpenAI Sonic Retro Contest Part 1 - Gym](pages/openai_retro_contest-1)
  
  
  
