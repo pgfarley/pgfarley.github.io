@@ -78,7 +78,7 @@ and a loop of **action**s against the **environment** resulting in an **observat
 
 ### Next
 
-In part 2 we'll take a look at [Gym Retro](https://github.com/openai/retro) a library that exposes video games as Gym environments. 
+In part 2 we'll take a look at [Gym Retro](https://github.com/openai/retro) a library that exposes console games as Gym environments. 
 
 If you want to dig deeper into Gym the [docs](https://gym.openai.com/docs/) and [source code](https://github.com/openai/gym) are good places to start. 
 
