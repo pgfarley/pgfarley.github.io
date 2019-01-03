@@ -31,12 +31,13 @@ Run the verification script Makefile specifying specifying the path to pydevd
 
 #### Step 5 
 
-Debug!
+Step through debugging in PyCharm.
 
 ![Step 5](../assets/cocotb-pycharm/step5.png)
 
 
 
-More Cocotb [here](https://cocotb.readthedocs.io/en/latest/)
+
+Complete Cocotb docs can be found [here](https://cocotb.readthedocs.io/en/latest/).
 
 
