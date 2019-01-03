@@ -26,7 +26,7 @@ Run the Remote Debug Server
 
 #### Step 4 
 
-Run the verification script Makefile specifying specifying the path to pydevd
+Run the verification script Makefile specifying the path to pydevd.
 ![Step 4](../assets/cocotb-pycharm/step4.png)
 
 
