@@ -1,7 +1,7 @@
 
 ### Debugging Cocotb verification scripts with PyCharm
 
-Cocotb scripts are executed by a python interpreter embedded in a native library which is dynamically loaded by a simulator at test runtime. The good news is you don't need to understand anything about all that to use Cocotb, but the indirection does mean a bit of scaffolding is necessary to enable visual debugging of scripts in PyCharm. 
+Cocotb scripts are executed by a python interpreter embedded in a native library which is dynamically loaded by a simulator at test runtime. Happily, you don't need to understand much about all of that to use Cocotb, but the indirection does mean a bit of scaffolding is necessary to enable visual debugging of scripts in PyCharm. 
 
 Complete Cocotb docs can be found [here](https://cocotb.readthedocs.io/en/latest/).
 
