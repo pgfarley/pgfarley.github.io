@@ -37,3 +37,6 @@ Debug!
 
 
 
+More Cocotb [here](https://cocotb.readthedocs.io/en/latest/)
+
+
