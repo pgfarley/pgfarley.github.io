@@ -1,7 +1,12 @@
 
 ### Debugging Cocotb verification scripts with PyCharm
 
-Please note these steps require PyCharm remote debugger server which is only available with the Professional (non-free) edition. Complete Cocotb docs can be found [here](https://cocotb.readthedocs.io/en/latest/).
+Cocotb scripts are executed by a python interpreter embedded in a native library which is dynamically loaded by a simulator at test runtime. Mercifully you don't really need to understand anything about all that to use Cocotb, but the indirection does mean a bit of scaffolding is necessary to enable visual debugging of scripts in PyCharm. 
+
+Complete Cocotb docs can be found [here](https://cocotb.readthedocs.io/en/latest/).
+
+Unfortunately the steps below do require Remote Debug Server which is only available with the Professional (non-free) edition of PyCharm. 
+
 
 
 #### Step 1
