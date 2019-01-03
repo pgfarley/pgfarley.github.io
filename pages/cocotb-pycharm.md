@@ -1,7 +1,8 @@
 
 ### Debugging Cocotb verification scripts with PyCharm
 
-Please note these steps require PyCharm remote debugger server which is only available with the Professional (non-free) edition.
+Please note these steps require PyCharm remote debugger server which is only available with the Professional (non-free) edition. Complete Cocotb docs can be found [here](https://cocotb.readthedocs.io/en/latest/).
+
 
 #### Step 1
 
@@ -35,9 +36,5 @@ Step through debugging in PyCharm.
 
 ![Step 5](../assets/cocotb-pycharm/step5.png)
 
-
-
-
-Complete Cocotb docs can be found [here](https://cocotb.readthedocs.io/en/latest/).
 
 
